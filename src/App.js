@@ -3,9 +3,11 @@ import Navbar from "./Components/Layout/Navbar";
 import Landing from "./Components/Layout/Landing";
 import Footer from "./Components/Layout/Footer";
 
+import "./App.css"
+
 const App = () => {
     return (
-        <div>
+        <div className="App">
             <Navbar />
             <Landing />
             <Footer />
