@@ -1,9 +1,14 @@
 import React from 'react';
+import Navbar from "./Components/Layout/Navbar";
+import Landing from "./Components/Layout/Landing";
+import Footer from "./Components/Layout/Footer";
 
 const App = () => {
     return (
         <div>
-            <h1>ho</h1>
+            <Navbar />
+            <Landing />
+            <Footer />
         </div>
     );
 };
