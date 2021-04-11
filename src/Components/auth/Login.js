@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import axios from "axios";
+import classnames from 'classname';
 
 const Login = ({history}) => {
 
     const [userInput, setUserInput] = useState({
         name: "",
         email: "",
-        password: ""
+        password: "",
+        errors: {}
     })
 
     const onChange = text => event => {
@@ -29,13 +31,15 @@ const Login = ({history}) => {
         axios.post("http://localhost:5000/api/users/login", loginUser)
             .then(data => {
                 if (data.status === 200) {
+                    const {token} = data.data
+                    localStorage.setItem("token", token)
                     history.push("/home")
-                } else {
-                    alert("error")
                 }
-
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                setUserInput({...userInput, errors: err.response.data})
+                console.log(err.response.data)
+            })
     }
 
 
@@ -49,26 +53,38 @@ const Login = ({history}) => {
                                 You can Login Here
                             </p>
 
-                            <form onSubmit={onSubmit}>
+                            <form noValidate onSubmit={onSubmit}>
                                 <div className={"form-group"}>
                                     <input
                                         type={"email"}
-                                        className={"form-control form-control-lg"}
+                                        // className={"form-control form-control-lg"}
+                                        className={classnames("form-control form-control-lg", {
+                                            'is-invalid': userInput.errors.email
+                                        })}
                                         placeholder={"Email"}
                                         name={"email"}
                                         value={userInput.email}
                                         onChange={onChange('email')}
                                     />
+                                    {userInput.errors.email && (
+                                        <div className={"invalid-feedback"}>{userInput.errors.email}</div>
+                                    )}
                                 </div>
                                 <div className={"form-group"}>
                                     <input
                                         type={"password"}
-                                        className={"form-control form-control-lg"}
+                                        // className={"form-control form-control-lg"}
+                                        className={classnames("form-control form-control-lg", {
+                                            'is-invalid': userInput.errors.password
+                                        })}
                                         placeholder={"Password"}
                                         name={"password"}
                                         value={userInput.password}
                                         onChange={onChange('password')}
                                     />
+                                    {userInput.errors.password && (
+                                        <div className={"invalid-feedback"}>{userInput.errors.password}</div>
+                                    )}
                                 </div>
                                 <input
                                     type={"submit"}
