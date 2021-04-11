@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import axios from "axios";
 
 const Signup = () => {
 
@@ -25,10 +26,15 @@ const Signup = () => {
         const newUser = {
             name: userInput.name,
             email: userInput.email,
-            password: userInput.password
+            password: userInput.password,
+            password2: userInput.password2
         }
 
         console.log(newUser)
+        axios.post("http://localhost:5000/api/users/register", newUser)
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
+
 
     }
 

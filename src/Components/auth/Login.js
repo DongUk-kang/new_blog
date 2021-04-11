@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from "axios";
 
 const Login = () => {
 
@@ -15,9 +16,8 @@ const Login = () => {
     const onSubmit = (e) => {
         e.preventDefault()
 
-        if (userInput.password !== userInput.password) {
-            alert("password not matching")
-        }
+
+
 
         const loginUser = {
             name: userInput.name,
@@ -26,6 +26,9 @@ const Login = () => {
         }
 
         console.log(loginUser)
+        axios.post("http://localhost:5000/api/users/login", loginUser)
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
     }
 
 
@@ -40,16 +43,6 @@ const Login = () => {
                             </p>
 
                             <form onSubmit={onSubmit}>
-                                <div className={"form-group"}>
-                                    <input
-                                        type={"text"}
-                                        className={"form-control form-control-lg"}
-                                        placeholder={"Name"}
-                                        name={"name"}
-                                        value={userInput.name}
-                                        onChange={onChange('name')}
-                                    />
-                                </div>
                                 <div className={"form-group"}>
                                     <input
                                         type={"email"}
