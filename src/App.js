@@ -8,6 +8,7 @@ import Landing from "./Components/Layout/Landing";
 import Footer from "./Components/Layout/Footer";
 import Signup from "./Components/auth/Signup";
 import Login from "./Components/auth/Login";
+import MainScreen from "./Components/Main/MainScreen";
 
 import "./App.css"
 
@@ -25,6 +26,7 @@ const App = () => {
                 <div className={"container"}>
                     <Route exact path={"/signup"} component={Signup} />
                     <Route exact path={"/login"} component={Login} />
+                    <Route exact path={"/home"} component={MainScreen} />
                 </div>
                 <Footer />
             </div>

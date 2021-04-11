@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 
-const Login = () => {
+const Login = ({history}) => {
 
     const [userInput, setUserInput] = useState({
         name: "",
@@ -27,7 +27,14 @@ const Login = () => {
 
         console.log(loginUser)
         axios.post("http://localhost:5000/api/users/login", loginUser)
-            .then(data => console.log(data))
+            .then(data => {
+                if (data.status === 200) {
+                    history.push("/home")
+                } else {
+                    alert("error")
+                }
+
+            })
             .catch(err => console.log(err))
     }
 

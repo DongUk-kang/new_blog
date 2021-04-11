@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from "axios";
 
-const Signup = () => {
+const Signup = ({history}) => {
 
     const [userInput, setUserInput] = useState({
         name: "",
@@ -32,12 +32,16 @@ const Signup = () => {
 
         console.log(newUser)
         axios.post("http://localhost:5000/api/users/register", newUser)
-            .then(data => console.log(data))
+            .then(data => {
+                if (data.status === 200) {
+                    history.push("/login")
+                } else {
+                    alert("error")
+                }
+            })
             .catch(err => console.log(err))
 
-
     }
-
 
     return (
         <div className={"register"}>
