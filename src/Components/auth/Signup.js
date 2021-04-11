@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
-import axios from "axios";
+import PropTypes from "prop-types";
+// import axios from "axios";
 import classnames from 'classname';
+import { connect } from "react-redux"
+import { registerUser } from "../../actions/authActions"
 
-const Signup = ({history}) => {
+const Signup = (props) => {
 
     const [userInput, setUserInput] = useState({
         name: "",
@@ -33,25 +36,29 @@ const Signup = ({history}) => {
         }
 
         console.log(newUser)
-        axios.post("http://localhost:5000/api/users/register", newUser)
-            .then(data => {
-
-                // console.log("+++++++++++++++++", data.data)
-
-                if (data.status === 200) {
-                    history.push("/login")
-                }
-            })
-            .catch(err => {
-
-                setUserInput({...userInput, errors: err.response.data})
-                console.log(err.response.data)
-            })
+        // axios.post("http://localhost:5000/api/users/register", newUser)
+        //     .then(data => {
+        //
+        //         // console.log("+++++++++++++++++", data.data)
+        //
+        //         if (data.status === 200) {
+        //             history.push("/login")
+        //         }
+        //     })
+        //     .catch(err => {
+        //
+        //         setUserInput({...userInput, errors: err.response.data})
+        //         console.log(err.response.data)
+        //     })
+        props.registerUser(newUser);
 
     }
 
+    const {user} = props.auth
+
     return (
         <div className={"register"}>
+            {user ? user.name : null}
             <div className={"container"}>
                 <div className={"row"}>
                     <div className={"col-md-8 m-auto"}>
@@ -137,4 +144,14 @@ const Signup = ({history}) => {
     );
 };
 
-export default Signup;
+
+Signup.propTypes = {
+    registerUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+    auth: state.auth
+})
+
+export default connect(mapStateToProps, {registerUser})(Signup);
