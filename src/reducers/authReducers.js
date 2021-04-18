@@ -12,9 +12,7 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 isAuthenticated: true,
-                user: {
-                    "userdata": "donguk"
-                }
+                user: action.payload
             }
         // case TEST:
         // return {
