@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from "prop-types";
 // import axios from "axios";
 import classnames from 'classname';
 import { connect } from "react-redux"
 import { registerUser } from "../../actions/authActions"
+import { withRouter } from "react-router-dom"
 
 const Signup = (props) => {
 
@@ -18,6 +19,8 @@ const Signup = (props) => {
     const onChange = text => event => {
         setUserInput({...userInput, [text]: event.target.value})
     }
+
+
 
 
     const onSubmit = (e) => {
@@ -50,9 +53,13 @@ const Signup = (props) => {
         //         setUserInput({...userInput, errors: err.response.data})
         //         console.log(err.response.data)
         //     })
-        props.registerUser(newUser);
+        props.registerUser(newUser, props.history);
 
     }
+
+    useEffect(() => {
+        // setUserInput()
+    }, [props.errors])
 
     const {user} = props.auth
 
@@ -147,11 +154,13 @@ const Signup = (props) => {
 
 Signup.propTypes = {
     registerUser: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    errors: state.errors
 })
 
-export default connect(mapStateToProps, {registerUser})(Signup);
+export default connect(mapStateToProps, {registerUser})(withRouter(Signup));
