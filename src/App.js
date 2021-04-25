@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
@@ -12,8 +12,22 @@ import MainScreen from "./Components/Main/MainScreen";
 import store from "./store";
 
 import "./App.css"
+import setAuthToken from "./utils/setAuthToken";
+import {setCurrentUser} from "./actions/authActions";
 
 const App = () => {
+    useEffect(() => {
+        if (localStorage.jwtToken) {
+            setAuthToken(localStorage.jwtToken);
+        }
+        store.dispatch(setCurrentUser());
+
+        window.addEventListener('storage', () => {
+            if (!localStorage.jwtToken) (
+                store.dispatch()
+             )
+        })
+    }, [])
     return (
         // <div className="App">
         //     <Navbar />
