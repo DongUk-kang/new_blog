@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import classnames from 'classname';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import {loginUser} from "../../actions/authActions"
 
-const Login = ({history}) => {
+const Login = (props) => {
 
     const [userInput, setUserInput] = useState({
         name: "",
@@ -21,25 +24,29 @@ const Login = ({history}) => {
 
 
 
-        const loginUser = {
-            name: userInput.name,
+        const userdata = {
             email: userInput.email,
             password: userInput.password
         }
 
         console.log(loginUser)
         axios.post("http://localhost:5000/api/users/login", loginUser)
-            .then(data => {
-                if (data.status === 200) {
-                    const {token} = data.data
-                    localStorage.setItem("token", token)
-                    history.push("/home")
-                }
-            })
-            .catch(err => {
-                setUserInput({...userInput, errors: err.response.data})
-                console.log(err.response.data)
-            })
+        //     .then(data => {
+        //         if (data.status === 200) {
+        //             const {token} = data.data
+        //             localStorage.setItem("token", token)
+        //             history.push("/home")
+        //         }
+        //     })
+        //     .catch(err => {
+        //         setUserInput({...userInput, errors: err.response.data})
+        //         console.log(err.response.data)
+        //     })
+        // console.log(userdata)
+        props.loginUser(userdata)
+        if (props.auth.isAuthenticated) {
+            props.history.push("/home")
+        }
     }
 
 
@@ -98,4 +105,15 @@ const Login = ({history}) => {
     );
 };
 
-export default Login;
+Login.propTypes = {
+    loginUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+})
+
+export default connect(mapStateToProps, {loginUser})(Login);

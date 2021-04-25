@@ -1,4 +1,6 @@
-import { TEST } from "../actions/types"
+// import { TEST } from "../actions/types"
+import axios from "axios";
+import { SET_CURRENT_USER } from "../actions/types"
 
 const initialState = {
     isAuthenticated: false,
@@ -7,9 +9,10 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case TEST:
+        case SET_CURRENT_USER:
         return {
             ...state,
+            isAuthenticated: true,
             user: action.payload
         }
 
