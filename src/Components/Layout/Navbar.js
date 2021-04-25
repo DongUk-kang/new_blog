@@ -18,13 +18,13 @@ const Navbar = ({ auth: { isAuthenticated, user }, logoutUser }) => {
                     onClick={logoutUser}
                     className={"nav-links"}
                 >
-                    <img
-                        className={"rounded-circle"}
-                        src={user.avatar}
-                        alt={user.name}
-                        style={{ width: '25px', marginRight: '5px'}}
-                        title={"You Must Have a Gravatar connected your email to display an image"}
-                    /> {' '}
+                    {/*<img*/}
+                    {/*    className={"rounded-circle"}*/}
+                    {/*    src={user.avatar}*/}
+                    {/*    alt={user.name}*/}
+                    {/*    style={{ width: '25px', marginRight: '5px'}}*/}
+                    {/*    title={"You Must Have a Gravatar connected your email to display an image"}*/}
+                    {/*/> {' '}*/}
                         Logout
 
                 </a>
