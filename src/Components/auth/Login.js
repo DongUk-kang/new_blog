@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from "axios";
+// import axios from "axios";
 import classnames from 'classname';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -8,7 +8,6 @@ import {loginUser} from "../../actions/authActions"
 const Login = (props) => {
 
     const [userInput, setUserInput] = useState({
-        name: "",
         email: "",
         password: "",
         errors: {}
@@ -30,7 +29,7 @@ const Login = (props) => {
         }
 
         console.log(loginUser)
-        axios.post("http://localhost:5000/api/users/login", loginUser)
+        // axios.post("http://localhost:5000/api/users/login", loginUser)
         //     .then(data => {
         //         if (data.status === 200) {
         //             const {token} = data.data
